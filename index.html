@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impossible IS Possible</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, rgba(21, 27, 38, 1) 0%, rgba(10, 15, 25, 1) 90%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(255, 165, 0, 0.3), rgba(255, 140, 0, 0.1));
+            filter: blur(3px);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(-30px) translateX(-10px); }
+            75% { transform: translateY(-10px) translateX(20px); }
+        }
+
+        .container {
+            position: relative;
+            width: 440px;
+            height: 520px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .circle-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: rotate 25s linear infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 165, 0, 0.5));
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .bar {
+            position: absolute;
+            width: 4px;
+            height: 45px;
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 0, 0.6));
+            border-radius: 4px;
+            top: 0;
+            left: 50%;
+            transform-origin: center 220px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
+            backdrop-filter: blur(2px);
+        }
+
+        .bar.active {
+            background: linear-gradient(180deg, #FFD700, #FF4500);
+            box-shadow: 0 0 30px #FF6B00, 0 0 60px #FF4500;
+            height: 65px;
+            width: 6px;
+            filter: blur(1px);
+        }
+
+        .center-circle {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 165, 0, 0.15), rgba(0, 0, 0, 0.8));
+            border: 2px solid rgba(255, 165, 0, 0.3);
+            box-shadow: 0 0 60px rgba(255, 140, 0, 0.4), inset 0 0 40px rgba(255, 215, 0, 0.2);
+            z-index: 5;
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .login-box {
+            position: relative;
+            z-index: 20;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(20px);
+            padding: 40px 35px;
+            border-radius: 30px;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+                inset 0 0 30px rgba(255, 255, 255, 0.1);
+            width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(0);
+            animation: floatBox 6s infinite ease-in-out;
+        }
+
+        @keyframes floatBox {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        h2 {
+            text-align: center;
+            color: transparent;
+            margin-bottom: 35px;
+            font-size: 42px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #FFD700, #FF8C00, #FF4500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
+            animation: titleGlow 3s infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 20px rgba(255, 140, 0, 0.5); }
+            to { text-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            background: rgba(10, 15, 25, 0.7);
+            border: 2px solid rgba(255, 165, 0, 0.2);
+            border-radius: 40px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(5px);
+        }
+
+        .input-group input:focus {
+            border-color: #FF8C00;
+            box-shadow: 0 0 30px rgba(255, 140, 0, 0.5), inset 0 0 10px rgba(255, 215, 0, 0.3);
+            background: rgba(15, 22, 36, 0.9);
+            transform: scale(1.02);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #FF8C00;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 8px rgba(255, 140, 0, 0.6));
+        }
+
+        .input-group:focus-within .input-icon {
+            transform: translateY(-50%) scale(1.2);
+            color: #FFD700;
+            filter: drop-shadow(0 0 15px #FFD700);
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 25px;
+        }
+
+        .forgot-password a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 2px;
+        }
+
+        .forgot-password a:hover {
+            color: #FFA500;
+            border-bottom-color: #FFA500;
+            text-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #FF8C00, #FF4500, #FF8C00);
+            background-size: 200% 100%;
+            border: none;
+            border-radius: 40px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .login-btn:hover {
+            background-position: 100% 0;
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255, 69, 0, 0.7);
+            letter-spacing: 3px;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .login-btn:active::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .social-login {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .social-login p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            margin-bottom: 18px;
+            position: relative;
+            display: inline-block;
+            padding: 0 15px;
+            background: rgba(18, 25, 35, 0.5);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 22px;
+            font-weight: 600;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .social-icon.facebook {
+            background: linear-gradient(145deg, #3b5998, #2d4373);
+            box-shadow: 0 5px 20px rgba(59, 89, 152, 0.5);
+        }
+
+        .social-icon.twitter {
+            background: linear-gradient(145deg, #000000, #1a1a1a);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+            font-size: 24px;
+        }
+
+        .social-icon.google {
+            background: linear-gradient(145deg, #db4437, #b33225);
+            box-shadow: 0 5px 20px rgba(219, 68, 55, 0.5);
+        }
+
+        .social-icon:hover {
+            transform: translateY(-8px) scale(1.15);
+            border-color: #FFD700;
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .signup-link a {
+            color: transparent;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-bottom: 3px;
+        }
+
+        .signup-link a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #FFD700, #FF4500);
+            transition: width 0.4s ease;
+            border-radius: 2px;
+        }
+
+        .signup-link a:hover::after {
+            width: 100%;
+        }
+
+        .signup-link a:hover {
+            text-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+        }
+
+        .toggle-password {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #FFD700 !important;
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 340px;
+                height: 500px;
+            }
+            
+            .login-box {
+                width: 320px;
+                padding: 30px 20px;
+            }
+            
+            h2 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <div class="circle-container" id="circleContainer"></div>
+        
+        <div class="center-circle"></div>
+
+        <div class="login-box">
+            <h2>Login</h2>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <span class="input-icon"><i class="fa-solid fa-envelope"></i></span>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password" required>
+                    <span class="input-icon toggle-password" id="togglePassword">
+                        <i class="fa-solid fa-lock" id="passwordIcon"></i>
+                    </span>
+                </div>
+
+                <div class="forgot-password">
+                    <a href="#" id="forgotPassword">Forgot your password ?</a>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">LOGIN</button>
+            </form>
+
+            <div class="social-login">
+                <p>log in with</p>
+                <div class="social-icons">
+                    <div class="social-icon facebook" id="facebookBtn">f</div>
+                    <div class="social-icon twitter" id="twitterBtn">𝕏</div>
+                    <div class="social-icon google" id="googleBtn">G</div>
+                </div>
+            </div>
+
+            <div class="signup-link">
+                <a href="#" id="signupBtn">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const circleContainer = document.getElementById('circleContainer');
+        const numBars = 36;
+        let activeBarIndex = 0;
+
+        for (let i = 0; i < numBars; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            const angle = (360 / numBars) * i;
+            bar.style.transform = `rotate(${angle}deg) translateY(-220px)`;
+            circleContainer.appendChild(bar);
+        }
+
+        function animateBars() {
+            const bars = document.querySelectorAll('.bar');
+
+            setInterval(() => {
+                bars[activeBarIndex % numBars].classList.add('active');
+                
+                if (activeBarIndex >= 8) {
+                    bars[(activeBarIndex - 8) % numBars].classList.remove('active');
+                }
+                
+                activeBarIndex++;
+            }, 90);
+        }
+
+        animateBars();
+
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 60 + 20;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                particle.style.animationDuration = `${Math.random() * 15 + 10}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('loginBtn');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordIcon = document.getElementById('passwordIcon');
+        const forgotPassword = document.getElementById('forgotPassword');
+        const facebookBtn = document.getElementById('facebookBtn');
+        const twitterBtn = document.getElementById('twitterBtn');
+        const googleBtn = document.getElementById('googleBtn');
+        const signupBtn = document.getElementById('signupBtn');
+
+        togglePassword.addEventListener('click', function() {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.className = 'fa-solid fa-unlock';
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.className = 'fa-solid fa-lock';
+            }
+            
+            passwordInput.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
+            setTimeout(() => {
+                passwordInput.style.boxShadow = '';
+            }, 300);
+        });
+
+        loginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (!email || !password) {
+                showNotification('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                showNotification('Please enter a valid email', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showNotification('Password must be at least 6 characters', 'error');
+                return;
+            }
+            
+            showNotification('Successfully logged in! Welcome back!', 'success');
+            
+            loginBtn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                loginBtn.style.transform = '';
+            }, 200);
+        });
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.top = '30px';
+            notification.style.right = '30px';
+            notification.style.padding = '15px 25px';
+            notification.style.borderRadius = '50px';
+            notification.style.fontWeight = '600';
+            notification.style.zIndex = '9999';
+            notification.style.boxShadow = '0 10px 40px rgba(0,0,0,0.3)';
+            notification.style.backdropFilter = 'blur(10px)';
+            notification.style.border = '1px solid rgba(255,255,255,0.2)';
+            notification.style.animation = 'slideIn 0.3s ease';
+            
+            if (type === 'success') {
+                notification.style.background = 'linear-gradient(135deg, rgba(0,255,0,0.2), rgba(0,200,0,0.3))';
+                notification.style.color = '#fff';
+                notification.style.borderLeft = '5px solid #00FF00';
+            } else {
+                notification.style.background = 'linear-gradient(135deg, rgba(255,0,0,0.2), rgba(200,0,0,0.3))';
+                notification.style.color = '#fff';
+                notification.style.borderLeft = '5px solid #FF0000';
+            }
+            
+            document.body.appendChild(notification);
+            
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes slideIn {
+                    from { transform: translateX(100px); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                notification.style.transform = 'translateX(100px)';
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        facebookBtn.addEventListener('click', function() {
+            showNotification('Facebook login - Demo version', 'error');
+        });
+        
+        twitterBtn.addEventListener('click', function() {
+            showNotification('Twitter login - Demo version', 'error');
+        });
+        
+        googleBtn.addEventListener('click', function() {
+            showNotification('Google login - Demo version', 'error');
+        });
+        
+        forgotPassword.addEventListener('click', function(e) {
+            e.preventDefault();
+            showNotification('Password reset link sent to your email!', 'success');
+        });
+        
+        signupBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showNotification('Sign up - Create new account', 'error');
+        });
+
+        [emailInput, passwordInput].forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    loginBtn.click();
+                }
+            });
+        });
+
+        const inputs = document.querySelectorAll('.input-group input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateX(5px)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+</body>
+
+</html>
